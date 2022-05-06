@@ -1,8 +1,8 @@
 import React from "react";
-import getRowsColumns from "./util";
+import useGetColumnsRows from "./useGetColumnsRows";
 
 function Table() {
-  const [columns, rows] = getRowsColumns();
+  const [columns, rows] = useGetColumnsRows();
   return (
     <div>
       <table>
