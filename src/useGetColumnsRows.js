@@ -8,9 +8,6 @@ export default function useGetColumnsRows() {
     if (Array.isArray(temp)) {
       for (let i = 0; i < temp.length; i++) {
         result[`DIR${count}`] = temp[i];
-        if (res) {
-          result = { ...result, ...res };
-        }
         let a = data[temp[i]];
         if (a) {
           for (let j = 0; j < a.child.length; j++) {
@@ -25,16 +22,16 @@ export default function useGetColumnsRows() {
       }
     } else {
       if (data[temp]?.child) {
-        let c = count;
-        for (let j = 0; j < data[temp]?.child.length; j++) {
-          if (!/.txt/.test(data[temp]?.child[j])) {
-            let d = { ...res };
-            d[`DIR${++count}`] = data[temp]?.child[j];
-            count = c;
-            rows.push(d);
-          } else {
-            if (data[temp]?.child.length === 1) {
-              rows.push(res);
+        if (data[temp]?.child.every(x => /.txt/.test(x))) {
+          rows.push(res);
+        } else {
+          let c = count;
+          for (let j = 0; j < data[temp]?.child.length; j++) {
+            if (!/.txt/.test(data[temp]?.child[j])) {
+              let d = { ...res };
+              d[`DIR${++count}`] = data[temp]?.child[j];
+              count = c;
+              rows.push(d);
             }
           }
         }
